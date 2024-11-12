@@ -17,6 +17,8 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {viewBinding = true}
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -37,9 +39,9 @@ android {
 
 dependencies {
 
-    val retrofitVersion = "2.11.0"
     implementation(libs.retrofit)
-    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+    implementation(libs.converter.gson)
+    implementation(libs.picasso)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
