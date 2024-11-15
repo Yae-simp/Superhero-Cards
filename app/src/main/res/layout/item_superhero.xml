@@ -36,13 +36,4 @@
 
     </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/biographyTextView"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:textColor="@color/black"
-        android:textSize="26sp"
-        android:layout_marginStart="8dp"
-        tools:text="Bio" />
-
 </LinearLayout>

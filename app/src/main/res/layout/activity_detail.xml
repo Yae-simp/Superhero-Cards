@@ -8,6 +8,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activities.DetailActivity">
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
@@ -23,10 +24,41 @@
         android:id="@+id/heroImageView"
         android:layout_width="match_parent"
         android:layout_height="360dp"
+        android:layout_marginTop="4dp"
         android:scaleType="centerCrop"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigationBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/heroImageView"
+        app:menu="@menu/menu_detail_act"
+        tools:ignore="MissingConstraints" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/navigationBar">
+
+        <TextView
+            android:id="@+id/infoTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:justificationMode="inter_word"
+            android:padding="23dp"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@menu/menu_detail_act"
+            android:lineSpacingExtra="4dp"
+            tools:text="Info" />
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.View
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.ViewCompat
@@ -16,7 +15,6 @@ import com.example.superherocards.adapters.SuperheroAdapter
 import com.example.superherocards.data.Superhero
 import com.example.superherocards.databinding.ActivityMainBinding
 import com.example.superherocards.utils.RetrofitProvider
-import com.google.android.material.progressindicator.LinearProgressIndicator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -32,7 +30,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
 
         //Inflates layout and gets the binding object
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -88,6 +85,7 @@ class MainActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val result = service.findSuperheroesByName(query)
+                Log.d("API", result.toString())
 
                 CoroutineScope(Dispatchers.Main).launch {
                     if (result.response == "success") {
@@ -95,12 +93,13 @@ class MainActivity : AppCompatActivity() {
                         adapter.updateItems(superheroList)
                         binding.progressIndicator.visibility = View.GONE
                     } else {
-                        println("error")
+                        println("Error: Unable to fetch hero data")
                     }
                 }
             } catch (e: Exception) {
                 Log.e("API", e.stackTraceToString())
             }
+
         }
     }
 }

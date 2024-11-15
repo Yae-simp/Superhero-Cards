@@ -2,8 +2,8 @@ package com.example.superherocards.activities
 
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -11,7 +11,7 @@ import com.example.superherocards.R
 import com.example.superherocards.data.Superhero
 import com.example.superherocards.databinding.ActivityDetailBinding
 import com.example.superherocards.utils.RetrofitProvider
-import com.google.android.material.progressindicator.LinearProgressIndicator
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -26,10 +26,11 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
 
     private lateinit var superhero: Superhero
+    private lateinit var navigationBar: BottomNavigationView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
 
         binding = ActivityDetailBinding.inflate(layoutInflater)
 
@@ -44,6 +45,32 @@ class DetailActivity : AppCompatActivity() {
         val id = intent.getStringExtra(EXTRA_SUPERHERO_ID)!!
 
         getSuperhero(id)
+
+        navigationBar.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.menu_bio -> {
+                    getSuperhero("biography")
+                }
+                R.id.menu_power -> {
+                    getSuperhero("powerstats")
+                }
+                R.id.menu_work -> {
+                    getSuperhero("work")
+                }
+            }
+            return@setOnItemSelectedListener true
+        }
+        navigationBar.selectedItemId = R.id.menu_bio
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun loadData() {
@@ -53,6 +80,7 @@ class DetailActivity : AppCompatActivity() {
 
     private fun getSuperhero(id: String) {
         val service = RetrofitProvider.getRetrofit()
+
 
         binding.progressIndicator.visibility = View.VISIBLE
         CoroutineScope(Dispatchers.IO).launch {
